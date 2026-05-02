@@ -5,22 +5,11 @@ dns:
   bind_hosts:
     - 0.0.0.0
   port: 53
-  upstream_dns:
-    - 172.30.0.20:5335
-  bootstrap_dns:
-    - 172.30.0.20:5335
-  upstream_timeout: 10s
   ratelimit: 0
   refuse_any: true
+  upstream_dns:
+    - tcp://172.30.0.20:5335
+  upstream_mode: parallel
   use_private_ptr_resolvers: true
   local_ptr_upstreams:
-    - 172.30.0.20:5335
-  private_networks:
-    - 10.66.66.0/24
-    - 172.16.0.0/12
-    - 192.168.0.0/16
-    - 100.64.0.0/10
-
-filtering:
-  filtering_enabled: true
-  protection_enabled: true
+    - tcp://172.30.0.20:5335
