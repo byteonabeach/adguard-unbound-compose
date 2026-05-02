@@ -1,0 +1,33 @@
+http:
+  address: 0.0.0.0:3000
+
+dns:
+  bind_hosts:
+    - 0.0.0.0
+  port: 53
+  upstream_dns:
+    - 172.30.0.20:5335
+  bootstrap_dns:
+    - 172.30.0.20:5335
+  upstream_timeout: 10s
+  ratelimit: 0
+  refuse_any: true
+  use_private_ptr_resolvers: true
+  local_ptr_upstreams:
+    - 172.30.0.20:5335
+  private_networks:
+    - 10.66.66.0/24
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+    - 100.64.0.0/10
+
+filtering:
+  filtering_enabled: true
+  protection_enabled: true
+  rewrites:
+    - domain: router.home.arpa
+      answer: 10.66.66.1
+    - domain: nas.home.arpa
+      answer: 10.66.66.10
+    - domain: *.home.arpa
+      answer: 10.66.66.1

@@ -1,0 +1,37 @@
+services:
+  unbound:
+    build: ./unbound
+    container_name: unbound
+    restart: unless-stopped
+    networks:
+      dnsnet:
+        ipv4_address: 172.30.0.20
+    volumes:
+      - ./unbound/unbound.conf:/etc/unbound/unbound.conf:ro
+      - ./unbound/data:/var/lib/unbound
+    expose:
+      - "5335"
+
+  adguardhome:
+    image: adguard/adguardhome:latest
+    container_name: adguardhome
+    restart: unless-stopped
+    depends_on:
+      - unbound
+    networks:
+      dnsnet:
+        ipv4_address: 172.30.0.30
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "3000:3000/tcp"
+    volumes:
+      - ./adguard/work:/opt/adguardhome/work
+      - ./adguard/conf:/opt/adguardhome/conf
+
+networks:
+  dnsnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
