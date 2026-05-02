@@ -24,10 +24,3 @@ dns:
 filtering:
   filtering_enabled: true
   protection_enabled: true
-  rewrites:
-    - domain: router.home.arpa
-      answer: 10.66.66.1
-    - domain: nas.home.arpa
-      answer: 10.66.66.10
-    - domain: *.home.arpa
-      answer: 10.66.66.1
